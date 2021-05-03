@@ -12,7 +12,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: #161b28;
+  background: ${(p) => p.theme.colors.primary};
   color: white;
   width: 367px;
   height: 367px;
