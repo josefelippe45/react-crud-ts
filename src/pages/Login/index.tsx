@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import React, { FC, useState } from 'react';
+import Cookies from 'js-cookie';
 import api from 'services';
 import {
   Container,
@@ -8,42 +9,36 @@ import {
   Input,
   InputContainer,
 } from './styles';
+import { useHistory } from 'react-router';
 
-const Register: FC = () => {
-  const [name, setName] = useState('');
+const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useHistory();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setPassword('');
     try {
-      await api.post('/register', {
-        name,
+      const token = await api.post('/login', {
         email,
         password,
       });
-      return alert('User registered!');
+      token.status === 200 &&
+        Cookies.set('auth-token', token, {
+          sameSite: 'strict',
+        });
+      navigate.push('/home');
     } catch (error) {
       console.error(error);
-      return alert('Not able to register user');
+      return alert('Please check your information');
     }
   };
 
   return (
     <Container>
       <FormContainer>
-        <h2>Create account</h2>
+        <h2>Login</h2>
         <Form>
-          <InputContainer>
-            <label>User name: </label>
-            <Input
-              type="text"
-              required
-              value={name}
-              placeholder="Type here..."
-              onChange={(e) => setName(e.target.value)}
-            />
-          </InputContainer>
           <InputContainer>
             <label>Email: </label>
             <Input
@@ -65,13 +60,13 @@ const Register: FC = () => {
             />
           </InputContainer>
         </Form>
-        <Button outline text="Register" onClick={handleSubmit} />
+        <Button outline text="Login" onClick={handleSubmit} />
         <p>
-          Already have an account? <a href="/">Sign in here!</a>
+          Don't have an account? <a href="/register">Sign up here!</a>
         </p>
       </FormContainer>
     </Container>
   );
 };
 
-export default Register;
+export default Login;

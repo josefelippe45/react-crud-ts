@@ -10,4 +10,8 @@ export const Container = styled.header`
   > button {
     margin-right: 30px;
   }
+  > button:first-of-type {
+    color: ${(p) => p.theme.colors.primary};
+    background: white;
+  }
 `;

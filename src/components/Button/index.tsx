@@ -1,15 +1,14 @@
-import React, { FC } from 'react';
+import React, { ButtonHTMLAttributes, FC } from 'react';
 import { Container } from './styles';
 
-interface IButton {
+interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   outline?: boolean;
   text: string;
-  onClick?: (arg: any) => void;
 }
 
-const Button: FC<IButton> = ({ outline, text, onClick, ...rest }) => {
+const Button: FC<IButton> = ({ outline, text, ...rest }) => {
   return (
-    <Container outline={outline} onClick={onClick}>
+    <Container outline={outline} {...rest}>
       {text}
     </Container>
   );
