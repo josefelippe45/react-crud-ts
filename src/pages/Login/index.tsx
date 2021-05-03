@@ -24,7 +24,7 @@ const Login: FC = () => {
         password,
       });
       token.status === 200 &&
-        Cookies.set('auth-token', token, {
+        Cookies.set('auth-token', token.data.token, {
           sameSite: 'strict',
         });
       navigate.push('/home');
