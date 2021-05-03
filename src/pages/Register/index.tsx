@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import React, { FC, useState } from 'react';
+import { useHistory } from 'react-router';
 import api from 'services';
 import {
   Container,
@@ -13,7 +14,7 @@ const Register: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useHistory();
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -22,7 +23,7 @@ const Register: FC = () => {
         email,
         password,
       });
-      return alert('User registered!');
+      navigate.push('/login');
     } catch (error) {
       console.error(error);
       return alert('Not able to register user');

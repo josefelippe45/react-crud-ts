@@ -23,8 +23,9 @@ const Login: FC = () => {
         email,
         password,
       });
+      const { token: authToken } = token.data;
       token.status === 200 &&
-        Cookies.set('auth-token', token.data.token, {
+        Cookies.set('auth-token', authToken, {
           sameSite: 'strict',
         });
       navigate.push('/home');
