@@ -1,6 +1,7 @@
 import Button from 'components/Button';
 import React, { FC, useState } from 'react';
 import Cookies from 'js-cookie';
+import jwt from 'jwt-decode';
 import api from 'services';
 import {
   Container,
@@ -18,17 +19,25 @@ const Login: FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setPassword('');
+
     try {
-      const token = await api.post('/login', {
+      const response = await api.post('/login', {
         email,
         password,
       });
-      const { token: authToken } = token.data;
-      token.status === 200 &&
-        Cookies.set('auth-token', authToken, {
+
+      const { token } = response.data;
+      const userId = jwt(token);
+
+      const state = {
+        userId,
+      };
+
+      response.status === 200 &&
+        Cookies.set('auth-token', token, {
           sameSite: 'strict',
         });
-      navigate.push('/home');
+      navigate.push('/home', state);
     } catch (error) {
       console.error(error);
       return alert('Please check your information');
@@ -39,7 +48,7 @@ const Login: FC = () => {
     <Container>
       <FormContainer>
         <h2>Login</h2>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <InputContainer>
             <label>Email: </label>
             <Input
@@ -60,8 +69,8 @@ const Login: FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </InputContainer>
+          <Button outline text="Login" type="submit" />
         </Form>
-        <Button outline text="Login" onClick={handleSubmit} />
         <p>
           Don't have an account? <a href="/register">Sign up here!</a>
         </p>
