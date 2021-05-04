@@ -10,6 +10,7 @@ import api from 'services';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import { useLocation } from 'react-router';
+import fetchNews from 'services/newsApi';
 
 interface IUser {
   name: string;
@@ -42,8 +43,10 @@ const Home: FC = () => {
       setUser(user);
     }
   };
+
   useEffect(() => {
     getUser();
+    fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
