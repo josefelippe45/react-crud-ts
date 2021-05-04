@@ -17,10 +17,7 @@ export const FormContainer = styled.div`
   width: 367px;
   height: 367px;
   border-radius: 8px;
-  > button {
-    width: 70%;
-    margin: 15px 0 0 0;
-  }
+
   > p {
     font-size: 14px;
   }
@@ -42,6 +39,10 @@ export const Form = styled.form`
   justify-content: center;
   width: 100%;
   color: white;
+  > button {
+    width: 70%;
+    margin: 15px 0 0 0;
+  }
 `;
 export const InputContainer = styled.div`
   display: flex;

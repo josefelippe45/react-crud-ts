@@ -34,7 +34,7 @@ const Register: FC = () => {
     <Container>
       <FormContainer>
         <h2>Create account</h2>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <InputContainer>
             <label>User name: </label>
             <Input
@@ -66,7 +66,7 @@ const Register: FC = () => {
             />
           </InputContainer>
         </Form>
-        <Button outline text="Register" onClick={handleSubmit} />
+        <Button outline text="Register" type="submit" />
         <p>
           Already have an account? <a href="/">Sign in here!</a>
         </p>
