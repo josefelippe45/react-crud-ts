@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Container, CardContainer, Card } from './styles';
+import { Container, ProfileColumn, PostColumn, NewsColumn } from './styles';
 import api from 'services';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
@@ -27,22 +27,13 @@ const Home: FC = () => {
   };
   useEffect(() => {
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container>
-      {error && <div>{error}</div>}
-      <CardContainer>
-        <h1>List of users</h1>
-        {users?.data.map((user, i) => (
-          <>
-            <p>User: {i + 1}</p>
-            <Card>
-              <p>Name: {user.name}</p>
-              <p>Email: {user.email}</p>
-            </Card>
-          </>
-        ))}
-      </CardContainer>
+      <ProfileColumn></ProfileColumn>
+      <PostColumn></PostColumn>
+      <NewsColumn></NewsColumn>
     </Container>
   );
 };

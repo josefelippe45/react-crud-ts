@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
+
+  background: ${(p) => p.theme.colors.primary};
   height: calc(100vh - 67px);
 `;
 export const CardContainer = styled.div`
@@ -12,7 +11,6 @@ export const CardContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: ${(p) => p.theme.colors.primary};
   color: white;
   width: 367px;
   border-radius: 8px;
@@ -36,4 +34,23 @@ export const Card = styled.div`
   border-radius: 10px;
   width: 65%;
   margin: 20px 0;
+`;
+export const ProfileColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+`;
+
+export const PostColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 55vw;
+  border-left: 1px solid #c2c2c2;
+  border-right: 1px solid #c2c2c2;
+`;
+
+export const NewsColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
 `;
