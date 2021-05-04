@@ -47,7 +47,7 @@ interface INews {
 }
 
 const Home: FC = () => {
-  const [user, setUser] = useState<AxiosResponse<IUser>>();
+  const [user, setUser] = useState<IUser>();
   const [error, setError] = useState('');
   const [news, setNews] = useState<INews[]>();
   const location = useLocation<ILocation>();
@@ -59,21 +59,23 @@ const Home: FC = () => {
           headers: { auth_token: Cookies.get('auth-token') },
         }
       );
-      return setUser(user);
+      return setUser(user.data);
     } catch (error) {
       setError('User not found :(');
       setUser(user);
     }
   }, [location, user]);
-  const getNews = async () => {
-    const res: INews[] = await fetchNews();
-    return setNews(res);
-  };
+
   useEffect(() => {
-    getUser();
+    const getNews = async () => {
+      const response = await fetchNews();
+      return setNews(response.value);
+    };
     getNews();
+    getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(news);
   return (
     <Container>
       {error && <div>{error}</div>}
@@ -83,7 +85,9 @@ const Home: FC = () => {
         </Card> */}
       </ProfileColumn>
       <PostColumn></PostColumn>
-      <NewsColumn></NewsColumn>
+      <NewsColumn>
+        {news && news.map((props) => <Card>{props.name}</Card>)}
+      </NewsColumn>
     </Container>
   );
 };

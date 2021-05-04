@@ -30,9 +30,11 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   padding: 15px;
+  align-self: center;
   border: 2px solid white;
   border-radius: 10px;
-  width: 65%;
+  color: white;
+  width: 90%;
   margin: 20px 0;
 `;
 export const ProfileColumn = styled.div`
@@ -53,4 +55,5 @@ export const NewsColumn = styled.div`
   display: flex;
   flex-direction: column;
   width: 25vw;
+  overflow-y: auto;
 `;
