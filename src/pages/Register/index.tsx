@@ -1,5 +1,5 @@
 import Button from 'components/Button';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import api from 'services';
 import {
@@ -15,20 +15,23 @@ const Register: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useHistory();
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      await api.post('/register', {
-        name,
-        email,
-        password,
-      });
-      navigate.push('/login');
-    } catch (error) {
-      console.error(error);
-      return alert('Not able to register user');
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      try {
+        await api.post('/register', {
+          name,
+          email,
+          password,
+        });
+        navigate.push('/login');
+      } catch (error) {
+        console.error(error);
+        return alert('Not able to register user');
+      }
+    },
+    [email, name, navigate, password]
+  );
 
   return (
     <Container>

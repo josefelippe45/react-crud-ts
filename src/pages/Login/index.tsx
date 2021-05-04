@@ -1,5 +1,5 @@
 import Button from 'components/Button';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
 import api from 'services';
@@ -21,32 +21,35 @@ const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useHistory();
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setPassword('');
+  const handleSubmit = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      setPassword('');
 
-    try {
-      const response = await api.post('/login', {
-        email,
-        password,
-      });
-
-      const { token } = response.data;
-      const userId: IUSerId = jwt(token);
-      const state = {
-        userId,
-      };
-
-      response.status === 200 &&
-        Cookies.set('auth-token', token, {
-          sameSite: 'strict',
+      try {
+        const response = await api.post('/login', {
+          email,
+          password,
         });
-      navigate.push('/home', state);
-    } catch (error) {
-      console.error(error);
-      return alert('Please check your information');
-    }
-  };
+
+        const { token } = response.data;
+        const userId: IUSerId = jwt(token);
+        const state = {
+          userId,
+        };
+
+        response.status === 200 &&
+          Cookies.set('auth-token', token, {
+            sameSite: 'strict',
+          });
+        navigate.push('/home', state);
+      } catch (error) {
+        console.error(error);
+        return alert('Please check your information');
+      }
+    },
+    [email, password, navigate]
+  );
 
   return (
     <Container>
