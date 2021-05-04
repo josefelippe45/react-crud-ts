@@ -12,6 +12,11 @@ import {
 } from './styles';
 import { useHistory } from 'react-router';
 
+interface IUSerId {
+  iat: number;
+  _id: string;
+}
+
 const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,8 +32,7 @@ const Login: FC = () => {
       });
 
       const { token } = response.data;
-      const userId = jwt(token);
-
+      const userId: IUSerId = jwt(token);
       const state = {
         userId,
       };
