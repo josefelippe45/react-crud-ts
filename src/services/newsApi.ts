@@ -13,7 +13,7 @@ const fetchNews = async () => {
       },
     };
     const response = await axios.get(Config.newsApiUrl, options);
-    return response;
+    return response.data;
   } catch (error) {
     console.log(error);
   }

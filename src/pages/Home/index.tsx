@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Container,
   ProfileColumn,
@@ -24,11 +24,34 @@ interface ILocation {
   userId: IUserId;
 }
 
+interface IProvider {
+  image: IImage;
+  name: string;
+  _type: string;
+}
+interface IImage {
+  isLicensed: boolean;
+  thumbnail: {
+    contentUrl: string;
+    width: number;
+    height: number;
+  };
+}
+interface INews {
+  datePublished: string;
+  description: string;
+  image: IImage;
+  name: string;
+  provider: IProvider[];
+  url: string;
+}
+
 const Home: FC = () => {
   const [user, setUser] = useState<AxiosResponse<IUser>>();
   const [error, setError] = useState('');
+  const [news, setNews] = useState<INews[]>();
   const location = useLocation<ILocation>();
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       const user: AxiosResponse<IUser> = await api.get(
         `/users/${location.state.userId._id}`,
@@ -38,24 +61,26 @@ const Home: FC = () => {
       );
       return setUser(user);
     } catch (error) {
-      console.error(error);
       setError('User not found :(');
       setUser(user);
     }
+  }, [location, user]);
+  const getNews = async () => {
+    const res: INews[] = await fetchNews();
+    return setNews(res);
   };
-
   useEffect(() => {
     getUser();
-    fetchNews();
+    getNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container>
+      {error && <div>{error}</div>}
       <ProfileColumn>
-        {error && <div>{error}</div>}
-        <Card>
+        {/* <Card>
           <p>{user && user.data.name}</p>
-        </Card>
+        </Card> */}
       </ProfileColumn>
       <PostColumn></PostColumn>
       <NewsColumn></NewsColumn>
