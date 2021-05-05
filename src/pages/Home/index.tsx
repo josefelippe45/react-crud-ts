@@ -99,12 +99,7 @@ const Home: FC = () => {
                 <p>{props.name}</p>
                 <div>
                   <img
-                    src={
-                      props &&
-                      props.image &&
-                      props.image.thumbnail &&
-                      props.image.thumbnail.contentUrl
-                    }
+                    src={props.image?.thumbnail?.contentUrl}
                     alt="news-highlight"
                   />
                   <p>{props.description.slice(0, 88)}...</p>
