@@ -26,7 +26,7 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const Card = styled.div`
+export const Card = styled.a`
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -36,6 +36,41 @@ export const Card = styled.div`
   color: white;
   width: 90%;
   margin: 20px 0;
+  cursor: pointer;
+  text-decoration: none;
+  > div:nth-of-type(2) {
+    display: flex;
+    > p {
+      font-size: 14px;
+      overflow: hidden;
+      height: 79px;
+      margin: 0 10px;
+    }
+    > img {
+      height: 80px;
+    }
+  }
+  > p {
+    margin: 0 0 20px 0;
+  }
+  > div:first-of-type {
+    display: flex;
+    margin: 0 0 10px 0;
+    align-items: center;
+    justify-content: space-between;
+    > img {
+      width: 20px;
+      height: 20px;
+    }
+    > p {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    > span {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
 `;
 export const ProfileColumn = styled.div`
   display: flex;
@@ -56,4 +91,8 @@ export const NewsColumn = styled.div`
   flex-direction: column;
   width: 25vw;
   overflow-y: auto;
+  > h1 {
+    color: white;
+    text-align: center;
+  }
 `;
