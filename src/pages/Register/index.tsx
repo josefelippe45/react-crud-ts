@@ -68,8 +68,8 @@ const Register: FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </InputContainer>
+          <Button outline text="Register" type="submit" />
         </Form>
-        <Button outline text="Register" type="submit" />
         <p>
           Already have an account? <a href="/">Sign in here!</a>
         </p>

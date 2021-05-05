@@ -9,7 +9,7 @@ import {
 import api from 'services';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import fetchNews from 'services/newsApi';
 
 interface IUser {
@@ -86,24 +86,14 @@ const Home: FC = () => {
         {news &&
           news
             .filter((hasImage) => hasImage.image)
-            .map((props, i) => (
+            .map((props) => (
               <Card href={props.url} target="_blank">
                 <div>
                   <img
-                    src={
-                      props.provider &&
-                      props.provider[0] &&
-                      props.provider[0].image &&
-                      props.provider[0].image.thumbnail.contentUrl
-                    }
+                    src={props.provider[0]?.image?.thumbnail?.contentUrl}
                     alt=""
                   />
-                  <p>
-                    {props &&
-                      props.provider &&
-                      props.provider[0] &&
-                      props.provider[0].name}
-                  </p>
+                  <p>{props.provider[0]?.name}</p>
                   <span>{props.datePublished.split('T')[0]}</span>
                 </div>
                 <p>{props.name}</p>
@@ -117,7 +107,7 @@ const Home: FC = () => {
                     }
                     alt="news-highlight"
                   />
-                  <p>{props.description.slice(0, 90)}...</p>
+                  <p>{props.description.slice(0, 88)}...</p>
                 </div>
               </Card>
             ))}
