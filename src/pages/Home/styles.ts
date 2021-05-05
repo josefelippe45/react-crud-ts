@@ -2,9 +2,18 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-
   background: ${(p) => p.theme.colors.primary};
-  height: calc(100vh - 67px);
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+`;
+export const ContentContainer = styled.div`
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 export const CardContainer = styled.div`
   display: flex;
@@ -26,50 +35,65 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const Card = styled.a`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   padding: 15px;
   align-self: center;
   border: 2px solid white;
   border-radius: 10px;
-  color: white;
-  width: 90%;
+  width: 100%;
   margin: 20px 0;
-  cursor: pointer;
-  text-decoration: none;
-  > div:nth-of-type(2) {
-    display: flex;
+  > a {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+
+    @media (max-width: 950px) {
+      > p {
+        font-size: 14px;
+      }
+    }
+    > div:nth-of-type(2) {
+      display: flex;
+      @media (max-width: 950px) {
+        > p {
+          font-size: 12px;
+        }
+      }
+      > p {
+        font-size: 14px;
+        overflow: hidden;
+        max-height: 79px;
+        margin: 0 10px;
+      }
+      > img {
+        height: 80px;
+      }
+    }
     > p {
-      font-size: 14px;
-      overflow: hidden;
-      max-height: 79px;
-      margin: 0 10px;
+      margin: 0 0 20px 0;
     }
-    > img {
-      height: 80px;
-    }
-  }
-  > p {
-    margin: 0 0 20px 0;
-  }
-  > div:first-of-type {
-    display: flex;
-    margin: 0 0 10px 0;
-    align-items: center;
-    justify-content: space-between;
-    > img {
-      width: 20px;
-      height: 20px;
-    }
-    > p {
-      font-weight: 500;
-      font-size: 16px;
-      text-align: center;
-    }
-    > span {
-      font-weight: 500;
-      font-size: 14px;
+    > div:first-of-type {
+      display: flex;
+      margin: 0 0 10px 0;
+      align-items: center;
+      justify-content: space-between;
+
+      > img {
+        width: 20px;
+        height: 20px;
+      }
+      > p {
+        font-weight: 500;
+        font-size: 14px;
+        text-align: center;
+      }
+      > span {
+        font-weight: 500;
+        font-size: 10px;
+        text-align: center;
+      }
     }
   }
 `;
@@ -83,17 +107,20 @@ export const PostColumn = styled.div`
   display: flex;
   flex-direction: column;
   width: 55vw;
-  border-left: 1px solid #c2c2c2;
-  border-right: 1px solid #c2c2c2;
 `;
 
-export const NewsColumn = styled.div`
+export const NewsRow = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 25vw;
-  overflow-y: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
   > h1 {
     color: white;
     text-align: center;
+  }
+  > div {
+    margin: 0 10px;
+    height: 300px;
   }
 `;

@@ -1,7 +1,6 @@
 import Button from 'components/Button';
 import React, { FC, useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
-import jwt from 'jwt-decode';
 import api from 'services';
 import {
   Container,
@@ -11,11 +10,6 @@ import {
   InputContainer,
 } from './styles';
 import { useHistory } from 'react-router';
-
-interface IUSerId {
-  iat: number;
-  _id: string;
-}
 
 const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -33,16 +27,12 @@ const Login: FC = () => {
         });
 
         const { token } = response.data;
-        const userId: IUSerId = jwt(token);
-        const state = {
-          userId,
-        };
 
         response.status === 200 &&
           Cookies.set('auth-token', token, {
             sameSite: 'strict',
           });
-        navigate.push('/home', state);
+        navigate.push('/home');
       } catch (error) {
         console.error(error);
         return alert('Please check your information');

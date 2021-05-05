@@ -17,7 +17,9 @@ export const FormContainer = styled.div`
   width: 367px;
   height: 367px;
   border-radius: 8px;
-
+  @media (max-width: 450px) {
+    width: 300px;
+  }
   > p {
     font-size: 14px;
   }

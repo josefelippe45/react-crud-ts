@@ -3,14 +3,15 @@ import {
   Container,
   ProfileColumn,
   PostColumn,
-  NewsColumn,
+  NewsRow,
   Card,
+  ContentContainer,
 } from './styles';
 import api from 'services';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import { useLocation } from 'react-router';
 import fetchNews from 'services/newsApi';
+import jwt from 'jwt-decode';
 
 interface IUser {
   name: string;
@@ -18,10 +19,7 @@ interface IUser {
 }
 interface IUserId {
   iat?: string;
-  _id?: string;
-}
-interface ILocation {
-  userId: IUserId;
+  _id: string;
 }
 
 interface IProvider {
@@ -46,21 +44,21 @@ const Home: FC = () => {
   const [user, setUser] = useState<IUser>();
   const [error, setError] = useState('');
   const [news, setNews] = useState<INews[]>();
-  const location = useLocation<ILocation>();
+  const [newsToShow, setNewsToShow] = useState(3);
+  const token = Cookies.get('auth-token');
+  const userId: IUserId = jwt(token || '');
   const getUser = useCallback(async () => {
     try {
-      const user: AxiosResponse<IUser> = await api.get(
-        `/users/${location.state.userId._id}`,
-        {
-          headers: { auth_token: Cookies.get('auth-token') },
-        }
-      );
+      const user: AxiosResponse<IUser> = await api.get(`/users/${userId._id}`, {
+        headers: { auth_token: Cookies.get('auth-token') },
+      });
       return setUser(user.data);
     } catch (error) {
+      console.log(error);
       setError('User not found :(');
       setUser(user);
     }
-  }, [location, user]);
+  }, [user, userId]);
 
   useEffect(() => {
     const getNews = async () => {
@@ -71,42 +69,55 @@ const Home: FC = () => {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const newsItems = news
+    ?.filter((hasImage) => hasImage.image)
+    .filter((_, index) => index < newsToShow);
+  const handleShowMore = useCallback(() => {
+    setNewsToShow((news) => news + 3);
+  }, [setNewsToShow]);
+  const handleShowLess = useCallback(() => {
+    setNewsToShow((news) => news - 3);
+  }, []);
   return (
     <Container>
       {error && <div>{error}</div>}
-      <ProfileColumn>
-        {/* <Card>
-          <p>{user && user.data.name}</p>
-        </Card> */}
-      </ProfileColumn>
-      <PostColumn></PostColumn>
-      <NewsColumn>
-        <h1>Latest News</h1>
-        {news &&
-          news
-            .filter((hasImage) => hasImage.image)
-            .map((props) => (
-              <Card href={props.url} target="_blank">
-                <div>
-                  <img
-                    src={props.provider[0]?.image?.thumbnail?.contentUrl}
-                    alt=""
-                  />
-                  <p>{props.provider[0]?.name}</p>
-                  <span>{props.datePublished.split('T')[0]}</span>
-                </div>
-                <p>{props.name}</p>
-                <div>
-                  <img
-                    src={props.image?.thumbnail?.contentUrl}
-                    alt="news-highlight"
-                  />
-                  <p>{props.description.slice(0, 88)}...</p>
-                </div>
-              </Card>
-            ))}
-      </NewsColumn>
+      <ContentContainer>
+        <NewsRow>
+          {newsItems && newsItems.length <= 11 && newsItems.length > 3 && (
+            <button onClick={handleShowLess}>click me</button>
+          )}
+          {newsItems &&
+            newsItems
+              .map((props, i) => (
+                <Card key={i}>
+                  <a href={props.url} target="_blank" rel="noreferrer">
+                    <div>
+                      <img
+                        src={props.provider[0]?.image?.thumbnail?.contentUrl}
+                        alt=""
+                      />
+                      <p>{props.provider[0]?.name}</p>
+                      <span>{props.datePublished.split('T')[0]}</span>
+                    </div>
+                    <p>{props.name}</p>
+                    <div>
+                      <img
+                        src={props.image?.thumbnail?.contentUrl}
+                        alt="news-highlight"
+                      />
+                      <p>{props.description.slice(0, 88)}...</p>
+                    </div>
+                  </a>
+                </Card>
+              ))
+              .slice(newsToShow - 3, newsToShow)}
+          {newsItems?.length !== 11 && (
+            <button onClick={handleShowMore}>click me</button>
+          )}
+        </NewsRow>
+        <ProfileColumn></ProfileColumn>
+        <PostColumn></PostColumn>
+      </ContentContainer>
     </Container>
   );
 };
