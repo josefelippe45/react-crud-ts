@@ -27,14 +27,10 @@ interface ILocation {
 interface IProvider {
   image: IImage;
   name: string;
-  _type: string;
 }
 interface IImage {
-  isLicensed: boolean;
   thumbnail: {
     contentUrl: string;
-    width: number;
-    height: number;
   };
 }
 interface INews {
@@ -51,7 +47,6 @@ const Home: FC = () => {
   const [error, setError] = useState('');
   const [news, setNews] = useState<INews[]>();
   const location = useLocation<ILocation>();
-  const navigate = useHistory();
   const getUser = useCallback(async () => {
     try {
       const user: AxiosResponse<IUser> = await api.get(
