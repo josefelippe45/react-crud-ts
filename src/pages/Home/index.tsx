@@ -117,7 +117,7 @@ const Home: FC = () => {
                     }
                     alt="news-highlight"
                   />
-                  <p>{props.description}</p>
+                  <p>{props.description.slice(0, 90)}...</p>
                 </div>
               </Card>
             ))}

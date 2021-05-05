@@ -43,7 +43,7 @@ export const Card = styled.a`
     > p {
       font-size: 14px;
       overflow: hidden;
-      height: 79px;
+      max-height: 79px;
       margin: 0 10px;
     }
     > img {
