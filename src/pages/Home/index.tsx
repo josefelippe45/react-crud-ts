@@ -77,13 +77,14 @@ const Home: FC = () => {
   }, [setNewsToShow]);
   const handleShowLess = useCallback(() => {
     setNewsToShow((news) => news - 3);
-  }, []);
+  }, [setNewsToShow]);
+  const newsArrayLength = news?.filter((hasImage) => hasImage.image).length;
   return (
     <Container>
       {error && <div>{error}</div>}
       <ContentContainer>
         <NewsRow>
-          {newsItems && newsItems.length <= 11 && newsItems.length > 3 && (
+          {newsItems && newsItems.length > 3 && (
             <button onClick={handleShowLess}>click me</button>
           )}
           {newsItems &&
@@ -111,7 +112,7 @@ const Home: FC = () => {
                 </Card>
               ))
               .slice(newsToShow - 3, newsToShow)}
-          {newsItems?.length !== 11 && (
+          {newsItems && newsArrayLength !== newsItems.length && (
             <button onClick={handleShowMore}>click me</button>
           )}
         </NewsRow>

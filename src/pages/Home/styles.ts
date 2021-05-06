@@ -114,7 +114,6 @@ export const NewsRow = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  overflow-x: auto;
   > h1 {
     color: white;
     text-align: center;
