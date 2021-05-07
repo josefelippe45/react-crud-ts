@@ -9,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
 `;
 export const ContentContainer = styled.div`
-  width: 90vw;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -120,6 +120,8 @@ export const NewsRow = styled.div`
   }
   > div {
     margin: 0 10px;
-    height: 300px;
+    overflow: hidden;
+    width: 250px;
+    height: 200px;
   }
 `;

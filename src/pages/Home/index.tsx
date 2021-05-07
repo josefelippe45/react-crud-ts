@@ -100,13 +100,21 @@ const Home: FC = () => {
                       <p>{props.provider[0]?.name}</p>
                       <span>{props.datePublished.split('T')[0]}</span>
                     </div>
-                    <p>{props.name}</p>
+                    <p>
+                      {props.name.length > 50
+                        ? `${props.name.slice(0, 47).trim()}...`
+                        : props.name}
+                    </p>
                     <div>
                       <img
                         src={props.image?.thumbnail?.contentUrl}
                         alt="news-highlight"
                       />
-                      <p>{props.description.slice(0, 88)}...</p>
+                      <p>
+                        {props.description.length > 63
+                          ? `${props.description.slice(0, 60).trim()}...`
+                          : props.description}
+                      </p>
                     </div>
                   </a>
                 </Card>
