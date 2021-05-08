@@ -8,10 +8,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
-export const ContentContainer = styled.div`
+export const NewsContainer = styled.div`
   width: 80vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -109,10 +108,15 @@ export const PostColumn = styled.div`
   width: 55vw;
 `;
 
+export const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  cursor: pointer;
+`;
 export const NewsRow = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: center;
   align-items: center;
   > h1 {
     color: white;
@@ -122,6 +126,7 @@ export const NewsRow = styled.div`
     margin: 0 10px;
     overflow: hidden;
     width: 250px;
+    min-width: 50px;
     height: 200px;
   }
 `;

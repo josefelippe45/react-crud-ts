@@ -1,17 +1,17 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import {
   Container,
-  ProfileColumn,
-  PostColumn,
   NewsRow,
   Card,
-  ContentContainer,
+  NewsContainer,
+  IconContainer,
 } from './styles';
 import api from 'services';
 import { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 import fetchNews from 'services/newsApi';
 import jwt from 'jwt-decode';
+import { ArrowLeft, ArrowRight } from 'assets/icons';
 
 interface IUser {
   name: string;
@@ -82,11 +82,13 @@ const Home: FC = () => {
   return (
     <Container>
       {error && <div>{error}</div>}
-      <ContentContainer>
+      <NewsContainer>
+        {newsItems && newsItems.length > 3 && (
+          <IconContainer onClick={handleShowLess}>
+            <ArrowLeft color="white" />
+          </IconContainer>
+        )}
         <NewsRow>
-          {newsItems && newsItems.length > 3 && (
-            <button onClick={handleShowLess}>click me</button>
-          )}
           {newsItems &&
             newsItems
               .map((props, i) => (
@@ -120,13 +122,13 @@ const Home: FC = () => {
                 </Card>
               ))
               .slice(newsToShow - 3, newsToShow)}
-          {newsItems && newsArrayLength !== newsItems.length && (
-            <button onClick={handleShowMore}>click me</button>
-          )}
         </NewsRow>
-        <ProfileColumn></ProfileColumn>
-        <PostColumn></PostColumn>
-      </ContentContainer>
+        {newsItems && newsArrayLength !== newsItems.length && (
+          <IconContainer onClick={handleShowMore}>
+            <ArrowRight color="white" />
+          </IconContainer>
+        )}
+      </NewsContainer>
     </Container>
   );
 };
